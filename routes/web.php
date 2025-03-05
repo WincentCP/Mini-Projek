@@ -1,9 +1,13 @@
 <?php
 class Router {
     public function route($url) {
-        $url = parse_url($url, PHP_URL_PATH);
+        // Clean up URL
+        $url = $url ?? '';
         $url = trim($url, '/');
-
+        
+        // For debugging
+        // echo "Routing URL: " . $url . "<br>";
+        
         switch($url) {
             case 'login':
                 require_once 'app/controllers/AuthController.php';
@@ -37,9 +41,10 @@ class Router {
                 $controller->index();
                 break;
             default:
-                // Handle 404
+                // Handle 404 with more information
                 header("HTTP/1.0 404 Not Found");
-                echo "404 Not Found";
+                echo "<h1>404 Not Found</h1>";
+                echo "<p>The requested URL /{$url} was not found on this server.</p>";
                 break;
         }
     }

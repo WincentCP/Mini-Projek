@@ -2,17 +2,16 @@
 <html>
 <head>
     <title>Register - Sistem Tabungan Mahasiswa</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
     <nav>
         <h1>Sistem Tabungan Mahasiswa</h1>
-        <a href="home">Home</a>
+        <a href="index.php?url=home">Home</a>
     </nav>
-
     <main>
         <h2>Register</h2>
-        <form method="POST" action="register">
+        <form method="POST" action="index.php?url=register">
             <div>
                 <label>Name</label>
                 <input type="text" name="name" required>
@@ -27,7 +26,7 @@
             </div>
             <button type="submit">Register</button>
         </form>
-        <p>Already have an account? <a href="login">Login</a></p>
+        <p>Already have an account? <a href="index.php?url=login">Login</a></p>
     </main>
 </body>
 </html>
