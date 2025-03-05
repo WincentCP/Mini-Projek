@@ -1,6 +1,9 @@
 <?php
 class Router {
     public function route($url) {
+        $url = parse_url($url, PHP_URL_PATH);
+        $url = trim($url, '/');
+
         switch($url) {
             case 'login':
                 require_once 'app/controllers/AuthController.php';
@@ -27,11 +30,16 @@ class Router {
                 $controller = new HomeController();
                 $controller->admin();
                 break;
+            case '':
             case 'home':
-            default:
                 require_once 'app/controllers/HomeController.php';
                 $controller = new HomeController();
                 $controller->index();
+                break;
+            default:
+                // Handle 404
+                header("HTTP/1.0 404 Not Found");
+                echo "404 Not Found";
                 break;
         }
     }
