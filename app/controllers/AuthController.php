@@ -14,10 +14,15 @@ class AuthController {
     // Fungsi untuk login pengguna
     public function login() {
         require_once 'app/helpers/AuthMiddleware.php';
-        AuthMiddleware::isGuest();
+        
+        // Check if user is already logged in
+        if (isset($_SESSION['user_id'])) {
+            header('Location: home');
+            exit();
+        }
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'];
 
             if($this->userModel->login($email, $password)) {
@@ -54,7 +59,7 @@ class AuthController {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['count'] === '0';
+        return intval($result['count']) === 0; // Changed from string comparison to integer
     }
 
     // Fungsi untuk logout pengguna
